@@ -20,18 +20,19 @@ private:
 	vector<int> gameBoard;
 	int size;
 
-	//these are used to print the board
-	void printHorizontalLine(string& currBoard) const;
-	void printGuide(string& currBoard) const;
+	//these are used to help print the board
+	void addHorizontalLine(string& currBoard) const;
+	void addGuide(string& currBoard) const;
 
 public: 
-	void init(int size);
+	void init(int newSize);
 	void clear();
 	void print() const;
 
+	int checkWin() const;
+
 	void setVal(int x, int y, int val);
 
-	int checkWin() const;
 	int getVal(int x, int y) const;
 	int getSize() const;
 

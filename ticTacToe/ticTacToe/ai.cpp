@@ -1,3 +1,4 @@
+#include"stdafx.h"
 #include"ai.h"
 
 void ai::init(int newAISymbol)

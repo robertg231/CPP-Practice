@@ -16,6 +16,6 @@
 int main()
 {
 	ticTacToe game1;
-	//game1.run();
+	game1.run();
 	return 0;
 }
