@@ -128,7 +128,6 @@ void ticTacToe::playerMove()
 
 void ticTacToe::aiMove()
 {
-	//todo
 	aiPlayer.performMove(gameBoard);
 }
 
