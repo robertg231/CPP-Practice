@@ -29,6 +29,7 @@ private:
 
 
 	void init();
+	void getUserLevel();
 	void playerMove();
 	void aiMove();
 	void changePlayer();

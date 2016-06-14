@@ -1,5 +1,7 @@
 #include"stdafx.h"
 #include"ai.h"
+#include<ctime>
+#include<cstdlib>
 
 aiMove ai::getBestMove(board& currGameBoard, int currPlayerSymbol)
 {
@@ -11,11 +13,15 @@ aiMove ai::getBestMove(board& currGameBoard, int currPlayerSymbol)
 	//ai wants to get highest score, player(human) wants to get smallest score
 	if (winner == aiSymbol)
 	{
-		return aiMove(10);
+		//our ai wants to get a winning value but our random adjustment can distort the value
+		//and turn it into a losing value
+		return aiMove(10 - getLevelAdjustment());
 	}
 	else if (winner == playerSymbol)
 	{
-		return aiMove(-10);
+		//our opponent wants a losing value(for ai) but our random adjustment can distort the value
+		//and turn it into a winning value
+		return aiMove(-10 + getLevelAdjustment());
 	}
 	else if (winner == TIE_VAL)
 	{
@@ -99,6 +105,20 @@ aiMove ai::getBestMove(board& currGameBoard, int currPlayerSymbol)
 	return moves[bestMove];
 }
 
+int ai::getLevelAdjustment()
+{
+	srand(time(NULL));
+
+	//we get a random number in our range or values based on our level
+	//the larger the level number the higher the chance we get that our win and loss
+	//will be chosen over the other
+	//so if we have a rand num ranging from 1-50 and we add/sub from our win/loss values.
+	//we have a 20%(1/5) chance of our value(originally 10) of being changed to a (still)favorable value
+	//so we would have a 80% chance of considering a losing move as a winning move
+	//and considering a winning move as a losing move
+	return (rand() % (level + 1));
+}
+
 void ai::init(int newAISymbol)
 {
 	aiSymbol = newAISymbol;
@@ -117,4 +137,9 @@ void ai::performMove(board& currGameBoard)
 {
 	aiMove bestMove = getBestMove(currGameBoard, aiSymbol);
 	currGameBoard.setVal(bestMove.x, bestMove.y, aiSymbol);
+}
+
+void ai::setLevel(int newLevel)
+{
+	level = newLevel;
 }

@@ -17,12 +17,15 @@ class ai
 private:
 	int aiSymbol;
 	int playerSymbol;
+	int level;
 
 	aiMove getBestMove(board& currGameBoard, int currPlayerSymbol);
+	int getLevelAdjustment();
 
 public:
 	void init(int newAISymbol);
 	void performMove(board& currGameBoard);
+	void setLevel(int newLevel);
 
 };
 

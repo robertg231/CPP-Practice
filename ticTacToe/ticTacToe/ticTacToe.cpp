@@ -44,6 +44,9 @@ void ticTacToe::init()
 	//if single player, we ask player what they want to be X or O
 	if (!isMultiplayer)
 	{
+
+		getUserLevel();
+
 		printf("\nWould you like to be X or O: ");
 
 		//loop while user input is invalid
@@ -71,12 +74,54 @@ void ticTacToe::init()
 				cout << "Must enter X or O!";
 				isValid = false;
 			}
-		} while (isValid = false);
+		} while (isValid == false);
 
 		//aiPlayer is given and initialized to opposite symbol of user
 		aiPlayer.init(aiSymbol);
 	}
 	printf("\n\n");
+}
+
+void ticTacToe::getUserLevel()
+{
+	printf("What level do you want to play?\n");
+	printf("1. EASY\n");
+	printf("2. MEDIUM\n");
+	printf("3. HARD\n");
+
+	int userLevel;
+	bool isValid;
+
+	do
+	{
+		isValid = true;
+
+		if (!(cin >> userLevel))
+		{
+			cout << "Invalid input!";
+			cin.clear();
+			cin.ignore(1000, '\n');
+			isValid = false;
+		}
+		else if (userLevel == 1)
+		{
+			aiPlayer.setLevel(40);
+		}
+		else if (userLevel == 2)
+		{
+			aiPlayer.setLevel(20);
+		}
+		else if (userLevel == 3)
+		{
+			aiPlayer.setLevel(0);
+		}
+		else
+		{
+			cout << "Must enter 1, 2, or 3!";
+			isValid = false;
+		}
+
+	} while (isValid == false);
 }
 
 
