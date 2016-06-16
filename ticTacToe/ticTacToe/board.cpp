@@ -30,7 +30,7 @@ const char SYMBOLS[3][3][3] =
 };
 
 //private member functions
-//ADD COMMENTS ABOUT HOW THE PRINTING WORKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 void board::addHorizontalLine(string& currBoard) const
 {
 	currBoard += "-";
@@ -296,9 +296,6 @@ int board::checkWin() const
 	//if we get here, every spot has been filled. so return tie
 	return TIE_VAL;
 }
-
-
-
 
 
 //sets value at x,y spot

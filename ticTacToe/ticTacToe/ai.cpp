@@ -6,7 +6,7 @@
 //constant representing infinity
 const int INF = 999999;
 
-aiMove ai::getBestMove(board& currGameBoard, int currPlayerSymbol)
+aiMove ai::getBestMove(board& currGameBoard, int currPlayerSymbol, aiMove alpha, aiMove beta)
 {
 	//base case checking to see if someone has won
 	int winner = currGameBoard.checkWin();
@@ -35,7 +35,6 @@ aiMove ai::getBestMove(board& currGameBoard, int currPlayerSymbol)
 //here is where we will implement the alpha beta pruning
 
 	//making a move so we can store the bestMove
-	aiMove bestMove;
 	aiMove move;
 
 
@@ -43,8 +42,7 @@ aiMove ai::getBestMove(board& currGameBoard, int currPlayerSymbol)
 	//otherwise, we find best move for aiplayer
 	if (currPlayerSymbol == aiSymbol)
 	{
-		//ai wants to maximize its score so we start with a super small number(aka a loss)
-		bestMove.score = -INF;
+		//ai wants max score, we will store it in alpha
 
 		//iterate through all the positions on the board until we find a valid spot
 		for (int y = 0; y < currGameBoard.getSize(); y++)
@@ -61,25 +59,30 @@ aiMove ai::getBestMove(board& currGameBoard, int currPlayerSymbol)
 					//temporarily set move on board****REMEMBER TO REMOVE IT!!!
 					currGameBoard.setVal(x, y, currPlayerSymbol);
 
-					move.score = getBestMove(currGameBoard, playerSymbol).score;
+					move.score = getBestMove(currGameBoard, playerSymbol, alpha, beta).score;
 
-					if (move.score > bestMove.score)
+					if (move.score > alpha.score)
 					{
-						bestMove = move;
+						alpha = move;
 					}
 
 					//removing our temp move
 					currGameBoard.setVal(x, y, NO_VAL);
+
+					//prune if we find a move that isn't worth checking
+					if (alpha.score >= beta.score)
+					{
+						return alpha;
+					}
 				}
 			}
 		}
 
-		return bestMove;
+		return alpha;
 	}
 	else
 	{
-		//human player wants lowest score so we give em a super high score(aka a loss)
-		bestMove.score = INF;
+		//human player wants min score, we will store it in beta
 
 		//:( i know.... duplicate code :(((((
 
@@ -98,22 +101,27 @@ aiMove ai::getBestMove(board& currGameBoard, int currPlayerSymbol)
 					//temporarily set move on board****REMEMBER TO REMOVE IT!!!
 					currGameBoard.setVal(x, y, currPlayerSymbol);
 
-					move.score = getBestMove(currGameBoard, aiSymbol).score;
+					move.score = getBestMove(currGameBoard, aiSymbol, alpha, beta).score;
 
-					if (move.score < bestMove.score)
+					if (move.score < beta.score)
 					{
-						bestMove = move;
+						beta = move;
 					}
 
 					//removing our temp move
 					currGameBoard.setVal(x, y, NO_VAL);
+
+					//prune if we find a move that isn't worth checking
+					if (alpha.score >= beta.score)
+					{
+						return beta;
+					}
 				}
 			}
 		}
 
-		return bestMove;
+		return beta;
 	}
-
 }
 
 int ai::getLevelAdjustment()
@@ -146,7 +154,10 @@ void ai::init(int newAISymbol)
 
 void ai::performMove(board& currGameBoard)
 {
-	aiMove bestMove = getBestMove(currGameBoard, aiSymbol);
+	aiMove initAlpha(-INF);
+	aiMove initBeta(INF);
+
+	aiMove bestMove = getBestMove(currGameBoard, aiSymbol, initAlpha, initBeta);
 	currGameBoard.setVal(bestMove.x, bestMove.y, aiSymbol);
 }
 

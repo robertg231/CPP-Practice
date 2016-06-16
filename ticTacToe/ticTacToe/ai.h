@@ -19,7 +19,7 @@ private:
 	int playerSymbol;
 	int level;
 
-	aiMove getBestMove(board& currGameBoard, int currPlayerSymbol);
+	aiMove getBestMove(board& currGameBoard, int currPlayerSymbol, aiMove alpha, aiMove beta);
 	int getLevelAdjustment();
 
 public:
