@@ -6,8 +6,8 @@ void fatal(char* message)
 {
 	char errorMessage[100];
 
-	strcpy(errorMessage, "[!!] Fatal Error ");
-	strncat(errorMessage, message, 83);
+	strcpy_s(errorMessage, "[!!] Fatal Error ");
+	strncat_s(errorMessage, message, 83);
 	perror(errorMessage);
 	exit(-1);
 }
