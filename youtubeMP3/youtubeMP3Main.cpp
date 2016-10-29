@@ -2,6 +2,11 @@
 //youtube-dl from https://github.com/rg3/youtube-dl
 //REQUIRES youtube-dl to be installed.
 
+//to make program run from anywhere(aka just calling it) 
+//add <THIS> to end of ~/.bashrc file
+//THIS = export PATH="$PATH:<Path/to/file>"
+
+
 #include<iostream>
 #include<string>
 #include<cstdlib>
