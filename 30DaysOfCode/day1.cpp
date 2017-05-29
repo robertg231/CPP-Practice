@@ -20,6 +20,7 @@ int main()
   cin >> e;
   e += d;
 
+
   string t;
   cin.ignore();
   getline(cin, t);
