@@ -24,6 +24,7 @@ int main()
         long long num2 = 1;
         long long sum = 0;
 
+        //finding the fib iteratively
         for(long long j = 0; fibNum < curCase; j++)
         {
             if(fibNum % 2 == 0)
