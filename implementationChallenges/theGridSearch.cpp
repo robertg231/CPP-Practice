@@ -1,11 +1,4 @@
-// I DID IT ALL WRONGGGGGG
-// ;_;
-//(ノಠ益ಠ)ノ彡┻━┻
-//ಠ╭╮ಠ
-//┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻
-// ᕙ(⇀‸↼‶)ᕗ
-// ༼ つ ಥ_ಥ ༽つ
-// （╯°□°）╯︵( .o.)
+//I DID ITTTTT
 
 #include <iostream>
 #include <string>
@@ -13,6 +6,7 @@
 using namespace std;
 
 string gridSearch();
+void printGrid(string* someGrid, int rows);
 
 int main()
 {
@@ -23,7 +17,7 @@ int main()
 
     for(int i = 0; i < testCases; i++)
     {
-        answers->append(gridSearch());
+        answers[i] = gridSearch();
     }
 
     for(int i = 0; i < testCases; i++)
@@ -36,40 +30,93 @@ int main()
 
 string gridSearch()
 {
-    int rows;
-    int columns;
-    cin >> rows >> columns;
+    int rowsG;
+    int columnsG;
+    cin >> rowsG >> columnsG;
 
-    char someChar;
-    string theGrid;
-    string thePattern;
+    string* theGrid = new string[rowsG];
 
-    //build the grid
-    for(int j = 0; j < rows; j++)
+    for(int i = 0; i < rowsG; i++)
     {
-        for(int k = 0; k < columns; k++)
-        {
-            cin >> someChar;
-            theGrid.push_back(someChar);
-        }
+        cin >> theGrid[i];
     }
 
-    cin >> rows >> columns;
-    //build the pattern
-    for(int j = 0; j < rows; j++)
+    int rowsP;
+    int columnsP;
+
+    cin >> rowsP >> columnsP;
+
+    string* thePattern = new string[rowsP];
+
+    for(int i = 0; i < rowsP; i++)
     {
-        for(int k = 0; k <columns; k++)
-        {
-            cin >> someChar;
-            thePattern.push_back(someChar);
-        }
+        cin >> thePattern[i];
     }
 
-    if(theGrid.find(thePattern) != string::npos)
+    //AFTER HERE SOMETHING GOES WRONG
+    bool inGrid;
+
+    int rowMatch;
+    int columnMatch;
+
+
+    int reCheckIndex = 0;
+
+    for(int i = 0; i < rowsG; i++)
     {
-        return "YES";
+        inGrid = false;
+        columnMatch = theGrid[i].find(thePattern[0], reCheckIndex);
+
+
+        if( columnMatch != string::npos)
+        {
+            rowMatch = i;
+            inGrid = true;
+            for(int j = 1; j < rowsP; j++)
+            {
+                int pColumnMatch = theGrid[rowMatch + j].find(thePattern[j], columnMatch);
+                if(pColumnMatch == string::npos || columnMatch != pColumnMatch)
+                {
+                    inGrid = false;
+                    break;
+                }
+            }
+
+        if(!inGrid && columnMatch < theGrid[0].size())
+        {
+            i--;
+            reCheckIndex = ++columnMatch;
+            continue;
+        }
+
+        }
+
+        if(inGrid)
+        {
+            return "YES";
+        }
+
+        reCheckIndex = 0;
     }
 
     return "NO";
 
+}
+
+
+void printGrid(string* someGrid, int rows)
+{
+    for(int i = 0; i < 5; i++)
+    {
+        cout << "////////////////////////////////" << endl << "test start" << endl;
+    }
+    for(int i = 0; i < rows; i++)
+    {
+        cout << someGrid[i] << endl;
+    }
+
+    for(int i = 0; i < 5; i++)
+    {
+        cout << "////////////////////////////////" << endl << "test end" << endl;
+    }
 }
