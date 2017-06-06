@@ -53,7 +53,7 @@ string gridSearch()
         cin >> thePattern[i];
     }
 
-    //AFTER HERE SOMETHING GOES WRONG
+    
     bool inGrid;
 
     int rowMatch;
