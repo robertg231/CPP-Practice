@@ -14,9 +14,12 @@ int patternCount(string s){
             {
                 //we got zeros
             }
-            if(s[i] == '1' && s[i - 1] == '0')
+            if(s[i] == '1')
             {
-                patterns++;
+                if(s[i-1] == '0')
+                {
+                    patterns++;
+                }
                 i--;
             }
         }
